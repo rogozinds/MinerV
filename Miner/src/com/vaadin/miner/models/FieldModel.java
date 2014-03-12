@@ -42,7 +42,13 @@ public class FieldModel {
 		remainedMines = 0;
 
 	}
-
+	/**
+	 * getter for size field
+	 * @return size
+	 */
+	public int getSize() {
+		return size;
+	}
 	/**
 	 * adding mine to the field;
 	 * 
