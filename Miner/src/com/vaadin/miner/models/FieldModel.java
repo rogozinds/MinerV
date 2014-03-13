@@ -2,31 +2,44 @@ package com.vaadin.miner.models;
 
 import java.util.Random;
 
+import com.vaadin.miner.views.FieldView;
+
 public class FieldModel {
+	// these numbers are also used in view
+	// for a particular Cell picture.
 	// these numbers represent a state of particular field
-	final static int CLOSED_EMPTY = 0;
-	final static int OPEN_EMPTY = 10;
-	final static int OPEN_BOMB = 100;
-	final static int CLOSED_BOMB = -100;
+	public final static int CLOSED_EMPTY = 0;
+	public final static int OPEN_EMPTY = 10;
+	public final static int OPEN_BOMB = 100;
+	public final static int CLOSED_BOMB = -100;
 	// digit represents number of neighbor mines; + cell is open - cell is
 	// closed;
-	final static int CLOSED_ONE = -1;
-	final static int CLOSED_TWO = -2;
-	final static int CLOSED_THREE = -3;
-	final static int CLOSED_FOUR = -4;
-	final static int CLOSED_FIVE = -5;
-	final static int CLOSED_SIX = -6;
-	final static int OPEN_ONE = 1;
-	final static int OPEN_TWO = 2;
-	final static int OPEN_THREE = 3;
-	final static int OPEN_FOUR = 4;
-	final static int OPEN_FIVE = 5;
-	final static int OPEN_SIX = 6;
-	final static int OPEN_SEVEN = 7;
+	public final static int CLOSED_ONE = -1;
+	public final static int CLOSED_TWO = -2;
+	public final static int CLOSED_THREE = -3;
+	public final static int CLOSED_FOUR = -4;
+	public final static int CLOSED_FIVE = -5;
+	public final static int CLOSED_SIX = -6;
+	public final static int OPEN_ONE = 1;
+	public final static int OPEN_TWO = 2;
+	public final static int OPEN_THREE = 3;
+	public final static int OPEN_FOUR = 4;
+	public final static int OPEN_FIVE = 5;
+	public final static int OPEN_SIX = 6;
+	public final static int OPEN_SEVEN = 7;
 	private int size;
 	private int mines;
 	private int[][] cells;
 	private int remainedMines;
+	private FieldView view;
+
+	public FieldView getView() {
+		return view;
+	}
+
+	public void setView(FieldView view) {
+		this.view = view;
+	}
 
 	public FieldModel(int size, int mines) {
 		this.size = size;
@@ -42,13 +55,16 @@ public class FieldModel {
 		remainedMines = 0;
 
 	}
+
 	/**
 	 * getter for size field
+	 * 
 	 * @return size
 	 */
 	public int getSize() {
 		return size;
 	}
+
 	/**
 	 * adding mine to the field;
 	 * 
@@ -109,6 +125,7 @@ public class FieldModel {
 	public boolean isOpen(int row, int col) {
 		return cells[row][col] > 0;
 	}
+
 	/**
 	 * 
 	 * @param row
@@ -118,10 +135,11 @@ public class FieldModel {
 	public int nNeighborBombs(int row, int col) {
 		if (hasBomb(row, col)) {
 			return 100;
-			
+
 		}
 		return Math.abs(cells[row][col]);
 	}
+
 	/**
 	 * calculate neigbors for particular cell and update the number in the field
 	 * neigbors are marked by #, x the mine # # # # x # # # #
@@ -134,7 +152,7 @@ public class FieldModel {
 	 * 
 	 */
 	private void addNeigbors(int row, int col) {
-		//if current cell already has bomb, no need to count neighbors
+		// if current cell already has bomb, no need to count neighbors
 		if (hasBomb(row, col)) {
 			return;
 		}
@@ -156,43 +174,51 @@ public class FieldModel {
 			}
 		}
 	}
+
 	/**
 	 * Opens Neighbors cells if current cell was empty
+	 * 
 	 * @param row
 	 * @param col
 	 */
-	private void openNeigbors(int row,int col) {
-		if(cells[row][col]!=OPEN_EMPTY) {
+	private void openNeigbors(int row, int col) {
+		if (cells[row][col] != OPEN_EMPTY) {
 			return;
 		}
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
 				if (isInRange(row + i, col + j)) {
-					openCell(row+i,col+j);
+					openCell(row + i, col + j);
 				}
 			}
-		}		
+		}
 	}
+
 	/**
-	 * Open cell 
+	 * Open cell
+	 * 
 	 * @param row
 	 * @param col
 	 */
-	public void openCell(int row,int col) {
-		if (isOpen(row,col)) {
+	public void openCell(int row, int col) {
+		int tmpValue = 0;
+		if (isOpen(row, col)) {
 			return;
+		} else if (cells[row][col] == CLOSED_BOMB) {
+			tmpValue = OPEN_BOMB;
+		} else if (cells[row][col] == CLOSED_EMPTY) {
+			cells[row][col] = OPEN_EMPTY;
+			tmpValue = OPEN_EMPTY;
+			openNeigbors(row, col);
+		} else {
+			tmpValue = Math.abs(cells[row][col]);
 		}
-		else if(cells[row][col]==CLOSED_BOMB) {
-			cells[row][col]=OPEN_BOMB;
-		}
-		else if(cells[row][col]==CLOSED_EMPTY) {
-			cells[row][col]=OPEN_EMPTY;
-			openNeigbors(row,col);
-		}
-		else {
-			cells[row][col]=Math.abs(cells[row][col]);
+		cells[row][col] = tmpValue;
+		if (view != null) {
+			view.updateCell(col, row, tmpValue);
 		}
 	}
+
 	public void createField() {
 		while (this.remainedMines > 0) {
 			if (addMine() == 1) {
