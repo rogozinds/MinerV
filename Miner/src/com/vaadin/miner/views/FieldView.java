@@ -18,9 +18,10 @@ import com.vaadin.ui.UI;
 
 public class FieldView {
 	//Path for pictures files look FieldModel
-	final private String PIC_0="dum1.png";
-	final private String PIC_10="dum2.png";
+	final private String CLOSED_EMPTY="closed_empty.png";
+	final private String OPEN_EMPTY="dum2.png";
 	
+
 	final private String PIC_100="dum3.png";
 	final private String PIC_MINUS_100="dum3.png";
 	final private String OPEN_ONE="dum3.png";
@@ -66,10 +67,9 @@ public class FieldView {
 	 * 
 	 */
 	private void initPics() {
-		pics.put(FieldModel.CLOSED_EMPTY, new FileResource(new File(basepath+PIC_0)));
-		pics.put(FieldModel.OPEN_EMPTY, new FileResource(new File(basepath+PIC_10)));
-		pics.put(FieldModel.OPEN_BOMB, new FileResource(new File(basepath+PIC_100)));
-		pics.put(FieldModel.CLOSED_BOMB, new FileResource(new File(basepath+PIC_MINUS_100)));
+		pics.put(FieldModel.CLOSED_EMPTY, new FileResource(new File(basepath+CLOSED_EMPTY)));
+		pics.put(FieldModel.OPEN_EMPTY, new FileResource(new File(basepath+OPEN_EMPTY)));
+		pics.put(FieldModel.OPEN_BOMB, new FileResource(new File(basepath+OPEN_BOMB)));
 		
 		pics.put(FieldModel.OPEN_ONE, new FileResource(new File(basepath+OPEN_ONE)));
 		pics.put(FieldModel.OPEN_TWO, new FileResource(new File(basepath+OPEN_TWO)));
@@ -77,7 +77,7 @@ public class FieldView {
 		pics.put(FieldModel.OPEN_FOUR, new FileResource(new File(basepath+OPEN_FOUR)));
 		pics.put(FieldModel.OPEN_FIVE, new FileResource(new File(basepath+OPEN_FIVE)));
 		pics.put(FieldModel.OPEN_SIX, new FileResource(new File(basepath+OPEN_SIX)));
-			
+
 	}
 	public void init() {
 		grid= new GridLayout(size, size);		
