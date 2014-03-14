@@ -18,25 +18,18 @@ import com.vaadin.ui.UI;
 
 public class FieldView {
 	//Path for pictures files look FieldModel
-	final private String PIC_0="dum1.png";
-	final private String PIC_10="dum2.png";
+	final private String CLOSED_EMPTY="closed_empty.png";
+	final private String OPEN_EMPTY="dum2.png";
 	
-	final private String PIC_100="dum100.png";
-	final private String PIC_MINUS_100="dum_MINUS_100.png";
-	final private String OPEN_ONE="dum1.png";
-	final private String OPEN_TWO="dum2.png";
-	final static String OPEN_THREE ="dum3.png";
-	final static String OPEN_FOUR = "dum4.png";
+	final private String OPEN_BOMB="open_bomb.png";
+	final private String OPEN_ONE="open_one.png";
+	final private String OPEN_TWO="open_two.png";
+	final static String OPEN_THREE ="open_three.png";
+	final static String OPEN_FOUR = "open_four.png";
 	final static String OPEN_FIVE = "dum5.png";
 	final static String OPEN_SIX = "dum6.png";
 	final static String OPEN_SEVEN = "dum7.png";
-	final private String CLOSED_ONE="dum1.png";
-	final private String CLOSED_TWO="dum2.png";
-	final static String CLOSED_THREE ="dum3.png";
-	final static String CLOSED_FOUR = "dum4.png";
-	final static String CLOSED_FIVE = "dum5.png";
-	final static String CLOSED_SIX = "dum6.png";
-	final static String CLOSED_SEVEN = "dum7.png";
+
 	
 	final private String CELLS_PIC_DIR="/WEB-INF/images/";
 	final private String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath()
@@ -73,10 +66,9 @@ public class FieldView {
 	 * 
 	 */
 	private void initPics() {
-		pics.put(FieldModel.CLOSED_EMPTY, new FileResource(new File(basepath+PIC_0)));
-		pics.put(FieldModel.OPEN_EMPTY, new FileResource(new File(basepath+PIC_10)));
-		pics.put(FieldModel.OPEN_BOMB, new FileResource(new File(basepath+PIC_100)));
-		pics.put(FieldModel.CLOSED_BOMB, new FileResource(new File(basepath+PIC_MINUS_100)));
+		pics.put(FieldModel.CLOSED_EMPTY, new FileResource(new File(basepath+CLOSED_EMPTY)));
+		pics.put(FieldModel.OPEN_EMPTY, new FileResource(new File(basepath+OPEN_EMPTY)));
+		pics.put(FieldModel.OPEN_BOMB, new FileResource(new File(basepath+OPEN_BOMB)));
 		
 		pics.put(FieldModel.OPEN_ONE, new FileResource(new File(basepath+OPEN_ONE)));
 		pics.put(FieldModel.OPEN_TWO, new FileResource(new File(basepath+OPEN_TWO)));
@@ -85,12 +77,6 @@ public class FieldView {
 		pics.put(FieldModel.OPEN_FIVE, new FileResource(new File(basepath+OPEN_FIVE)));
 		pics.put(FieldModel.OPEN_SIX, new FileResource(new File(basepath+OPEN_SIX)));
 		
-		pics.put(FieldModel.CLOSED_ONE, new FileResource(new File(basepath+CLOSED_ONE)));
-		pics.put(FieldModel.CLOSED_TWO, new FileResource(new File(basepath+CLOSED_TWO)));
-		pics.put(FieldModel.CLOSED_THREE, new FileResource(new File(basepath+CLOSED_THREE)));
-		pics.put(FieldModel.CLOSED_FOUR, new FileResource(new File(basepath+CLOSED_FOUR)));
-		pics.put(FieldModel.CLOSED_FIVE, new FileResource(new File(basepath+CLOSED_FIVE)));
-		pics.put(FieldModel.CLOSED_SIX, new FileResource(new File(basepath+CLOSED_SIX)));
 		
 	}
 	public void init() {
