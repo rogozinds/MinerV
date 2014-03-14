@@ -6,8 +6,9 @@ import com.vaadin.miner.views.FieldView;
 
 public class FieldController {
 	FieldModel model;
-	FieldView view;
-
+	public FieldController(FieldModel m) {
+		this.model=m;
+	}
 	public void cellClick(CellView cell) {
 		model.openCell(cell.getRow(), cell.getCol());
 	}

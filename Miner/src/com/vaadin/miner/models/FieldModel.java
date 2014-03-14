@@ -88,7 +88,7 @@ public class FieldModel {
 	 * @param col
 	 * @return is current cell in range
 	 */
-	boolean isInRange(int row, int col) {
+	private boolean isInRange(int row, int col) {
 		if ((row < 0) || (row >= size)) {
 			return false;
 		}

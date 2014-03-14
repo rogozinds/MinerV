@@ -21,22 +21,15 @@ public class FieldView {
 	final private String PIC_0="dum1.png";
 	final private String PIC_10="dum2.png";
 	
-	final private String PIC_100="dum100.png";
-	final private String PIC_MINUS_100="dum_MINUS_100.png";
-	final private String OPEN_ONE="dum1.png";
+	final private String PIC_100="dum3.png";
+	final private String PIC_MINUS_100="dum3.png";
+	final private String OPEN_ONE="dum3.png";
 	final private String OPEN_TWO="dum2.png";
 	final static String OPEN_THREE ="dum3.png";
 	final static String OPEN_FOUR = "dum4.png";
 	final static String OPEN_FIVE = "dum5.png";
 	final static String OPEN_SIX = "dum6.png";
 	final static String OPEN_SEVEN = "dum7.png";
-	final private String CLOSED_ONE="dum1.png";
-	final private String CLOSED_TWO="dum2.png";
-	final static String CLOSED_THREE ="dum3.png";
-	final static String CLOSED_FOUR = "dum4.png";
-	final static String CLOSED_FIVE = "dum5.png";
-	final static String CLOSED_SIX = "dum6.png";
-	final static String CLOSED_SEVEN = "dum7.png";
 	
 	final private String CELLS_PIC_DIR="/WEB-INF/images/";
 	final private String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath()
@@ -84,14 +77,7 @@ public class FieldView {
 		pics.put(FieldModel.OPEN_FOUR, new FileResource(new File(basepath+OPEN_FOUR)));
 		pics.put(FieldModel.OPEN_FIVE, new FileResource(new File(basepath+OPEN_FIVE)));
 		pics.put(FieldModel.OPEN_SIX, new FileResource(new File(basepath+OPEN_SIX)));
-		
-		pics.put(FieldModel.CLOSED_ONE, new FileResource(new File(basepath+CLOSED_ONE)));
-		pics.put(FieldModel.CLOSED_TWO, new FileResource(new File(basepath+CLOSED_TWO)));
-		pics.put(FieldModel.CLOSED_THREE, new FileResource(new File(basepath+CLOSED_THREE)));
-		pics.put(FieldModel.CLOSED_FOUR, new FileResource(new File(basepath+CLOSED_FOUR)));
-		pics.put(FieldModel.CLOSED_FIVE, new FileResource(new File(basepath+CLOSED_FIVE)));
-		pics.put(FieldModel.CLOSED_SIX, new FileResource(new File(basepath+CLOSED_SIX)));
-		
+			
 	}
 	public void init() {
 		grid= new GridLayout(size, size);		
@@ -100,6 +86,7 @@ public class FieldView {
 			for(int j=0;j<size;j++) {
 				CellView cell=new CellView(i,j);
 				cell.setSource(pics.get(FieldModel.CLOSED_EMPTY));
+				cells[i][j]=cell;
 				grid.addComponent(cells[i][j],i,j);
 			}
 		}
