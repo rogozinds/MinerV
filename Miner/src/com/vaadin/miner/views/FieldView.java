@@ -6,10 +6,12 @@ import java.util.HashMap;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.miner.controllers.FieldController;
+import com.vaadin.miner.controllers.FieldController.eCellAction;
 import com.vaadin.miner.exceptions.BadResourceException;
 import com.vaadin.miner.models.FieldModel;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
+import com.vaadin.shared.MouseEventDetails.MouseButton;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
@@ -19,15 +21,14 @@ import com.vaadin.ui.UI;
 public class FieldView {
 	//Path for pictures files look FieldModel
 	final private String CLOSED_EMPTY="closed_empty.png";
-	final private String OPEN_EMPTY="dum2.png";
-	
+	final private String OPEN_EMPTY="open_empty.png";
+	final private String BLOCKED="blocked.png";
 
-	final private String PIC_100="dum3.png";
-	final private String PIC_MINUS_100="dum3.png";
-	final private String OPEN_ONE="dum3.png";
-	final private String OPEN_TWO="dum2.png";
-	final static String OPEN_THREE ="dum3.png";
-	final static String OPEN_FOUR = "dum4.png";
+	final private String OPEN_BOMB="open_bomb.png";
+	final private String OPEN_ONE="open_one.png";
+	final private String OPEN_TWO="open_two.png";
+	final static String OPEN_THREE ="open_three.png";
+	final static String OPEN_FOUR = "open_four.png";
 	final static String OPEN_FIVE = "dum5.png";
 	final static String OPEN_SIX = "dum6.png";
 	final static String OPEN_SEVEN = "dum7.png";
@@ -52,15 +53,16 @@ public class FieldView {
 	}
 	/**
 	 * Updates the picture of the cell
-	 * @param col cell column
 	 * @param row cell row
+	 * @param col cell column
+	 
 	 * @param picId cell picture id
 	 */
-	public void updateCell(int col,int row,int picId) {
+	public void updateCell(int row,int col,int picId) {
 		if(!pics.containsKey(picId)) {
 			Notification.show("NO such picture id in resoursces hash map");
 		}
-		cells[col][row].setSource(pics.get(picId));
+		cells[row][col].setSource(pics.get(picId));
 	}
 	/**
 	 * initializate the HASH_MAP OF all pictures
@@ -77,6 +79,7 @@ public class FieldView {
 		pics.put(FieldModel.OPEN_FOUR, new FileResource(new File(basepath+OPEN_FOUR)));
 		pics.put(FieldModel.OPEN_FIVE, new FileResource(new File(basepath+OPEN_FIVE)));
 		pics.put(FieldModel.OPEN_SIX, new FileResource(new File(basepath+OPEN_SIX)));
+		pics.put(FieldModel.BLOCKED, new FileResource(new File(basepath+BLOCKED)));
 
 	}
 	public void init() {
@@ -87,7 +90,7 @@ public class FieldView {
 				CellView cell=new CellView(i,j);
 				cell.setSource(pics.get(FieldModel.CLOSED_EMPTY));
 				cells[i][j]=cell;
-				grid.addComponent(cells[i][j],i,j);
+				grid.addComponent(cells[i][j],j,i);
 			}
 		}
 		
@@ -97,7 +100,14 @@ public class FieldView {
 			public void layoutClick(LayoutClickEvent event) {
 				// TODO Auto-generated method stub
 				Component com=event.getChildComponent();
-				controller.cellClick((CellView) com);
+				if(event.getButton()==MouseButton.LEFT) {
+					controller.cellClick((CellView) com,eCellAction.OPEN);
+				}
+				else if (event.getButton()==MouseButton.RIGHT) {
+					controller.cellClick((CellView) com,eCellAction.BLOCK);
+				}
+				
+				
 			}
 		});
 	}

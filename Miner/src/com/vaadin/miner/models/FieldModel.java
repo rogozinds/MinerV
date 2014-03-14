@@ -12,6 +12,9 @@ public class FieldModel {
 	public final static int OPEN_EMPTY = 10;
 	public final static int OPEN_BOMB = 100;
 	public final static int CLOSED_BOMB = -100;
+	//these numbers represent either cell is blocked or not
+	public final static int NOT_BLOCKED=0;
+	public final static int BLOCKED=-10;
 	// digit represents number of neighbor mines; + cell is open - cell is
 	// closed;
 	public final static int CLOSED_ONE = -1;
@@ -30,6 +33,7 @@ public class FieldModel {
 	private int size;
 	private int mines;
 	private int[][] cells;
+	private int[][] blockedCells;
 	private int remainedMines;
 	private FieldView view;
 
@@ -45,6 +49,7 @@ public class FieldModel {
 		this.size = size;
 		this.mines = mines;
 		cells = new int[size][size];
+		blockedCells = new int[size][size];
 		remainedMines = size;
 	}
 
@@ -115,7 +120,9 @@ public class FieldModel {
 		}
 		return false;
 	}
-
+	public boolean isBlocked(int row,int col) {
+		return blockedCells[row][col]==BLOCKED;
+	}
 	/**
 	 * 
 	 * @param row
@@ -202,7 +209,7 @@ public class FieldModel {
 	 */
 	public void openCell(int row, int col) {
 		int tmpValue = 0;
-		if (isOpen(row, col)) {
+		if (isOpen(row, col) || (isBlocked(row, col)) ) {
 			return;
 		} else if (cells[row][col] == CLOSED_BOMB) {
 			tmpValue = OPEN_BOMB;
@@ -215,10 +222,27 @@ public class FieldModel {
 		}
 		cells[row][col] = tmpValue;
 		if (view != null) {
-			view.updateCell(col, row, tmpValue);
+			view.updateCell(row, col, tmpValue);
 		}
 	}
-
+	/**
+	 * Blocking the cell, that it can't be open
+	 * or unblock  if it is open. In classic miner this is the same as putting/removing flag
+	 * @param row
+	 * @param col
+	 */
+	public void blockUnblockCell(int row, int col) {
+		if (isOpen(row, col)) {
+			return;
+		} else if (blockedCells[row][col]==BLOCKED) {
+			blockedCells[row][col]=NOT_BLOCKED;
+			view.updateCell(row, col, CLOSED_EMPTY);
+		}
+		else { 	
+			blockedCells[row][col]=BLOCKED;
+			view.updateCell(row, col, BLOCKED);
+		}
+	}
 	public void createField() {
 		while (this.remainedMines > 0) {
 			if (addMine() == 1) {
