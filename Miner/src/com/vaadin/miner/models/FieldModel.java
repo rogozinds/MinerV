@@ -50,7 +50,7 @@ public class FieldModel {
 		this.mines = mines;
 		cells = new int[size][size];
 		blockedCells = new int[size][size];
-		remainedMines = size;
+		remainedMines = mines;
 	}
 
 	public FieldModel(int[][] cells, int mines) {

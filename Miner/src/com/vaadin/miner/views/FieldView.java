@@ -12,6 +12,7 @@ import com.vaadin.miner.models.FieldModel;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.shared.MouseEventDetails.MouseButton;
+import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
@@ -42,11 +43,11 @@ public class FieldView {
 	private FieldModel model;
 	private FieldController controller;
 	private int size;
-	private UI ui;
-	public FieldView(FieldModel model,FieldController controller,UI ui) {
+	private AbstractLayout mainLayout;
+	public FieldView(FieldModel model,FieldController controller,AbstractLayout mainLayout) {
 		this.model=model;
 		size=model.getSize();
-		this.ui=ui;
+		this.mainLayout=mainLayout;
 		this.controller=controller;
 		cells=new CellView[size][size];
 		initPics();
@@ -84,10 +85,11 @@ public class FieldView {
 	}
 	public void init() {
 		grid= new GridLayout(size, size);		
-		ui.setContent(grid);
+		mainLayout.addComponent(grid);
 		for (int i = 0; i < size; i++) {
 			for(int j=0;j<size;j++) {
 				CellView cell=new CellView(i,j);
+				cell.setWidth("10%");
 				cell.setSource(pics.get(FieldModel.CLOSED_EMPTY));
 				cells[i][j]=cell;
 				grid.addComponent(cells[i][j],j,i);

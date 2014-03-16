@@ -43,12 +43,17 @@ public class MinerUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		
-		FieldModel model=new FieldModel(5, 2);
+		MainWindow mw= new MainWindow();
+		setContent(mw);
+		
+		/*
+		FieldModel model=new FieldModel(10,10);
 		model.createField();
 		FieldController controller=new FieldController(model);
-		FieldView view = new FieldView(model, controller, this);
+		FieldView view = new FieldView(model, controller, mw.getLayout());
 		view.init();
 		model.setView(view);
+		*/
 	}
 
 }
