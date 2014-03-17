@@ -2,6 +2,7 @@ package com.vaadin.miner.models;
 
 import java.util.Random;
 
+import com.vaadin.miner.Game;
 import com.vaadin.miner.views.FieldView;
 
 public class FieldModel {
@@ -35,6 +36,7 @@ public class FieldModel {
 	private int[][] cells;
 	private int[][] blockedCells;
 	private int remainedMines;
+	private int cellsToOpen;
 	private FieldView view;
 
 	public FieldView getView() {
@@ -44,13 +46,13 @@ public class FieldModel {
 	public void setView(FieldView view) {
 		this.view = view;
 	}
-
 	public FieldModel(int size, int mines) {
 		this.size = size;
 		this.mines = mines;
 		cells = new int[size][size];
-		blockedCells = new int[size][size];
 		remainedMines = mines;
+		blockedCells = new int[size][size];
+		cellsToOpen=size*size-mines;
 	}
 
 	public FieldModel(int[][] cells, int mines) {
@@ -58,6 +60,8 @@ public class FieldModel {
 		this.size = cells.length;
 		this.cells = cells;
 		remainedMines = 0;
+		blockedCells = new int[size][size];
+		cellsToOpen=size*size-mines;
 
 	}
 
@@ -200,7 +204,16 @@ public class FieldModel {
 			}
 		}
 	}
-
+	/**
+	 * blocks all cells on the field;
+	 */
+	public void blockAllCells() {
+		for(int i=0;i<size;i++) {
+			for(int j=0;j<size;j++) {
+				blockedCells[i][j]=BLOCKED;
+			}
+		}
+	}
 	/**
 	 * Open cell
 	 * 
@@ -214,15 +227,24 @@ public class FieldModel {
 		} else if (cells[row][col] == CLOSED_BOMB) {
 			tmpValue = OPEN_BOMB;
 		} else if (cells[row][col] == CLOSED_EMPTY) {
+			cellsToOpen--;
 			cells[row][col] = OPEN_EMPTY;
 			tmpValue = OPEN_EMPTY;
 			openNeigbors(row, col);
 		} else {
+			cellsToOpen--;
 			tmpValue = Math.abs(cells[row][col]);
 		}
 		cells[row][col] = tmpValue;
 		if (view != null) {
 			view.updateCell(row, col, tmpValue);
+		}
+		if (cells[row][col] == OPEN_BOMB) {
+			Game.getInstance().onLostGame();
+			blockAllCells();
+		}
+		if(cellsToOpen==0) {
+			Game.getInstance().onWinGame();
 		}
 	}
 	/**

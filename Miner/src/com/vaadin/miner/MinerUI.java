@@ -32,7 +32,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@Theme("miner")
+@Theme("minertheme")
 public class MinerUI extends UI {
 
 	@WebServlet(value = "/*", asyncSupported = true)
@@ -44,16 +44,8 @@ public class MinerUI extends UI {
 	protected void init(VaadinRequest request) {
 		
 		MainWindow mw= new MainWindow();
+		Game.getInstance().setMw(mw);
 		setContent(mw);
-		
-		/*
-		FieldModel model=new FieldModel(10,10);
-		model.createField();
-		FieldController controller=new FieldController(model);
-		FieldView view = new FieldView(model, controller, mw.getLayout());
-		view.init();
-		model.setView(view);
-		*/
 	}
 
 }

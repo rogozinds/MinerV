@@ -1,0 +1,46 @@
+/* Import the reindeer theme.*/
+/* This only allows us to use the mixins defined in it and does not add any styles by itself. */
+@import "../reindeer/reindeer.scss";
+
+/* This contains all of your theme.*/
+/* If somebody wants to extend the theme she will include this mixin. */
+@mixin minertheme {
+  /* Include all the styles from the reindeer theme */
+  @include reindeer;
+
+  /* Insert your theme rules here */
+     .labelLose {  
+        font-family: HelveticaRounded; 
+        font-size: 30px;
+        font-style: bold;
+        color: red;
+    }
+    .header {
+    	font-family: Arial; 
+        font-size: 30px;
+        font-style: bold;
+        color: black;
+        padding-top:10px;
+        padding-bottom:7px;
+    }
+    .labelWin {  
+        font-family: HelveticaRounded; 
+        font-size: 30px;
+        font-style: bold;
+        color: blue;
+    }
+    .buttons {
+    	margin-top:10px;
+    	margin-bottom:10px;
+    	margin-left:20px;
+    	border-style:solid;
+    	width:500px;
+    	align:cent
+    }
+    .field {
+        margin-top:10px;
+    	margin-bottom:10px;
+    	margin-left:10px;
+    	margin-right:10px;
+    }
+}

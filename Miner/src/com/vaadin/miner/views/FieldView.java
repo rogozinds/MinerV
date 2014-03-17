@@ -52,6 +52,7 @@ public class FieldView {
 		cells=new CellView[size][size];
 		initPics();
 	}
+
 	/**
 	 * Updates the picture of the cell
 	 * @param row cell row

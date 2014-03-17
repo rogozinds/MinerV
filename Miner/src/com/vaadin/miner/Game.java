@@ -7,11 +7,21 @@ import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component;
 
 public class Game {
+	static private MainWindow mw;
+	FieldModel model;
+	public MainWindow getMw() {
+		return this.mw;
+	}
+	public void setMw(MainWindow mw) {
+		this.mw = mw;
+		mw.getLblStatus().setValue("Specify level of difficulty");
+		mw.getLblStatus().setStyleName("header");
+	}
 	private static Game instance=null;
 	private Game() {
-		
+
 	}
-	static Game getInstance() {
+	public static Game getInstance() {
 		if (instance == null) {
 			return new Game();
 		}
@@ -19,12 +29,21 @@ public class Game {
 	}
 	public void startGame(int size,int mines, AbstractLayout layout) {
 		layout.removeAllComponents();
-		FieldModel model=new FieldModel(size,mines);
+		model=new FieldModel(size,mines);
 		model.createField();
 		FieldController controller=new FieldController(model);
 		
 		FieldView view = new FieldView(model, controller, layout);
 		view.init();
 		model.setView(view);
+
+	}
+	public void onLostGame() {
+		mw.getLblStatus().setStyleName("labelLose");
+		mw.getLblStatus().setValue("YOU LOSE!");
+	}
+	public void onWinGame() {
+		mw.getLblStatus().setStyleName("labelWin");
+		mw.getLblStatus().setValue("YOU WIN!");
 	}
 }
