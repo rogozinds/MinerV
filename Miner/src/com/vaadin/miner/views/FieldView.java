@@ -7,18 +7,14 @@ import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.miner.controllers.FieldController;
 import com.vaadin.miner.controllers.FieldController.eCellAction;
-import com.vaadin.miner.exceptions.BadResourceException;
 import com.vaadin.miner.models.FieldModel;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.shared.MouseEventDetails.MouseButton;
-import com.vaadin.shared.ui.MultiSelectMode;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 
 public class FieldView {
 	//Path for pictures files look FieldModel
@@ -102,7 +98,6 @@ public class FieldView {
 			
 			@Override
 			public void layoutClick(LayoutClickEvent event) {
-				// TODO Auto-generated method stub
 				Component com=event.getChildComponent();
 				if ((event.isDoubleClick()) ){
 					controller.cellClick((CellView) com, eCellAction.OPEN_NEIGHBORS);

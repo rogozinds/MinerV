@@ -4,7 +4,6 @@ import com.vaadin.miner.controllers.FieldController;
 import com.vaadin.miner.models.FieldModel;
 import com.vaadin.miner.views.FieldView;
 import com.vaadin.ui.AbstractLayout;
-import com.vaadin.ui.Component;
 
 public class Game {
 	static private MainWindow mw;
