@@ -36,14 +36,15 @@ public class Game {
 		FieldView view = new FieldView(model, controller, layout);
 		view.init();
 		model.setView(view);
+		mw.getLblStatus().setValue("");
 
 	}
 	public void onLostGame() {
 		mw.getLblStatus().setStyleName("labelLose");
-		mw.getLblStatus().setValue("YOU LOSE!");
+		mw.getLblStatus().setValue("YOU LOSE! TRY AGAIN!");
 	}
 	public void onWinGame() {
 		mw.getLblStatus().setStyleName("labelWin");
-		mw.getLblStatus().setValue("YOU WIN!");
+		mw.getLblStatus().setValue("YOU WIN! TRY ONCE MORE!");
 	}
 }

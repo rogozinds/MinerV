@@ -12,6 +12,7 @@ import com.vaadin.miner.models.FieldModel;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.shared.MouseEventDetails.MouseButton;
+import com.vaadin.shared.ui.MultiSelectMode;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
@@ -103,7 +104,10 @@ public class FieldView {
 			public void layoutClick(LayoutClickEvent event) {
 				// TODO Auto-generated method stub
 				Component com=event.getChildComponent();
-				if(event.getButton()==MouseButton.LEFT) {
+				if ((event.isDoubleClick()) ){
+					controller.cellClick((CellView) com, eCellAction.OPEN_NEIGHBORS);
+				}
+				else if(event.getButton()==MouseButton.LEFT) {
 					controller.cellClick((CellView) com,eCellAction.OPEN);
 				}
 				else if (event.getButton()==MouseButton.RIGHT) {

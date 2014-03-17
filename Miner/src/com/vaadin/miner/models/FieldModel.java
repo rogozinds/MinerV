@@ -13,9 +13,9 @@ public class FieldModel {
 	public final static int OPEN_EMPTY = 10;
 	public final static int OPEN_BOMB = 100;
 	public final static int CLOSED_BOMB = -100;
-	//these numbers represent either cell is blocked or not
-	public final static int NOT_BLOCKED=0;
-	public final static int BLOCKED=-10;
+	// these numbers represent either cell is blocked or not
+	public final static int NOT_BLOCKED = 0;
+	public final static int BLOCKED = -10;
 	// digit represents number of neighbor mines; + cell is open - cell is
 	// closed;
 	public final static int CLOSED_ONE = -1;
@@ -46,13 +46,14 @@ public class FieldModel {
 	public void setView(FieldView view) {
 		this.view = view;
 	}
+
 	public FieldModel(int size, int mines) {
 		this.size = size;
 		this.mines = mines;
 		cells = new int[size][size];
 		remainedMines = mines;
 		blockedCells = new int[size][size];
-		cellsToOpen=size*size-mines;
+		cellsToOpen = size * size - mines;
 	}
 
 	public FieldModel(int[][] cells, int mines) {
@@ -61,7 +62,7 @@ public class FieldModel {
 		this.cells = cells;
 		remainedMines = 0;
 		blockedCells = new int[size][size];
-		cellsToOpen=size*size-mines;
+		cellsToOpen = size * size - mines;
 
 	}
 
@@ -124,9 +125,11 @@ public class FieldModel {
 		}
 		return false;
 	}
-	public boolean isBlocked(int row,int col) {
-		return blockedCells[row][col]==BLOCKED;
+
+	public boolean isBlocked(int row, int col) {
+		return blockedCells[row][col] == BLOCKED;
 	}
+
 	/**
 	 * 
 	 * @param row
@@ -187,33 +190,35 @@ public class FieldModel {
 	}
 
 	/**
-	 * Opens Neighbors cells if current cell was empty
+	 * Opens Neighbors cells
 	 * 
 	 * @param row
 	 * @param col
 	 */
-	private void openNeigbors(int row, int col) {
-		if (cells[row][col] != OPEN_EMPTY) {
-			return;
-		}
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
-				if (isInRange(row + i, col + j)) {
-					openCell(row + i, col + j);
+	public void openNeigbors(int row, int col) {
+		if (isOpen(row, col)) {
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					if (isInRange(row + i, col + j)) {
+						openCell(row + i, col + j);
+					}
 				}
 			}
 		}
 	}
+
 	/**
 	 * blocks all cells on the field;
 	 */
 	public void blockAllCells() {
-		for(int i=0;i<size;i++) {
-			for(int j=0;j<size;j++) {
-				blockedCells[i][j]=BLOCKED;
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				blockedCells[i][j] = BLOCKED;
 			}
 		}
 	}
+
 	/**
 	 * Open cell
 	 * 
@@ -222,7 +227,7 @@ public class FieldModel {
 	 */
 	public void openCell(int row, int col) {
 		int tmpValue = 0;
-		if (isOpen(row, col) || (isBlocked(row, col)) ) {
+		if (isOpen(row, col) || (isBlocked(row, col))) {
 			return;
 		} else if (cells[row][col] == CLOSED_BOMB) {
 			tmpValue = OPEN_BOMB;
@@ -243,28 +248,30 @@ public class FieldModel {
 			Game.getInstance().onLostGame();
 			blockAllCells();
 		}
-		if(cellsToOpen==0) {
+		if (cellsToOpen == 0) {
 			Game.getInstance().onWinGame();
 		}
 	}
+
 	/**
-	 * Blocking the cell, that it can't be open
-	 * or unblock  if it is open. In classic miner this is the same as putting/removing flag
+	 * Blocking the cell, that it can't be open or unblock if it is open. In
+	 * classic miner this is the same as putting/removing flag
+	 * 
 	 * @param row
 	 * @param col
 	 */
 	public void blockUnblockCell(int row, int col) {
 		if (isOpen(row, col)) {
 			return;
-		} else if (blockedCells[row][col]==BLOCKED) {
-			blockedCells[row][col]=NOT_BLOCKED;
+		} else if (blockedCells[row][col] == BLOCKED) {
+			blockedCells[row][col] = NOT_BLOCKED;
 			view.updateCell(row, col, CLOSED_EMPTY);
-		}
-		else { 	
-			blockedCells[row][col]=BLOCKED;
+		} else {
+			blockedCells[row][col] = BLOCKED;
 			view.updateCell(row, col, BLOCKED);
 		}
 	}
+
 	public void createField() {
 		while (this.remainedMines > 0) {
 			if (addMine() == 1) {
